@@ -32,19 +32,11 @@ func Login() templ.Component {
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = deps.Bootstrap().Render(ctx, templ_7745c5c3_Buffer)
+		templ_7745c5c3_Err = deps.Shoelace().Render(ctx, templ_7745c5c3_Buffer)
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<title>App Template</title></head><body class=\"main\"><div class=\"container d-flex flex-column min-vh-100 justify-content-center align-items-center\"><form action=\"/api/auth\" method=\"post\" enctype=\"multipart/x-www-form-urlencoded\" class=\"input-validation-pattern\"><div class=\"form-group\"><label for=\"username\">Username</label> <input type=\"text\" class=\"form-control\" id=\"username\" name=\"username\" placeholder=\"Enter username\"></div><div class=\"form-group\"><label for=\"password1\">Password</label> <input type=\"password\" class=\"form-control\" id=\"password1\" name=\"password\" placeholder=\"Password\"></div><div class=\"form-group form-check\"><input type=\"checkbox\" class=\"form-check-input\" id=\"rememberMe\" name=\"rememberMe\"> <label class=\"form-check-label\" for=\"rememberMe\">Remember me</label></div><button type=\"submit\" class=\"btn btn-primary\">Login</button></form></div>")
-		if templ_7745c5c3_Err != nil {
-			return templ_7745c5c3_Err
-		}
-		templ_7745c5c3_Err = deps.BootstrapJS().Render(ctx, templ_7745c5c3_Buffer)
-		if templ_7745c5c3_Err != nil {
-			return templ_7745c5c3_Err
-		}
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</body></html>")
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<title>App Template</title></head><body><div class=\"login-form\"><div><sl-card class=\"card-basic\"><form action=\"/api/auth\" method=\"post\" enctype=\"multipart/x-www-form-urlencoded\" class=\"input-validation-pattern\"><div><sl-input type=\"text\" label=\"Username\" name=\"username\" placeholder=\"Your username\"></sl-input></div><div><sl-input type=\"password\" label=\"Password\" name=\"password\" placeholder=\"Your password\" password-toggle=\"true\"></sl-input></div><div><sl-checkbox type=\"checkbox\" name=\"rememberMe\">Remember me</sl-checkbox></div><div><sl-button type=\"submit\" variant=\"primary\">Login</sl-button></div></form></sl-card></div></div></body></html>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
