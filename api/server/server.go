@@ -9,11 +9,11 @@ import (
 	"github.com/labstack/echo/v4/middleware"
 	"golang.org/x/time/rate"
 
-	"github.com/hookenz/moneygo/api/db"
-	"github.com/hookenz/moneygo/api/server/handler"
-	"github.com/hookenz/moneygo/api/server/middleware/cookieauth"
-	"github.com/hookenz/moneygo/api/server/middleware/logging"
-	"github.com/hookenz/moneygo/web/pages"
+	"github.com/hookenz/app-template/api/db"
+	"github.com/hookenz/app-template/api/server/handler"
+	"github.com/hookenz/app-template/api/server/middleware/cookieauth"
+	"github.com/hookenz/app-template/api/server/middleware/logging"
+	"github.com/hookenz/app-template/web/pages"
 )
 
 type Server struct {

@@ -1,7 +1,7 @@
 package handler
 
 import (
-	"github.com/hookenz/moneygo/api/db"
+	"github.com/hookenz/app-template/api/db"
 )
 
 type Handler struct {

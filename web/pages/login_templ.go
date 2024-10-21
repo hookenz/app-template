@@ -8,7 +8,7 @@ package pages
 import "github.com/a-h/templ"
 import templruntime "github.com/a-h/templ/runtime"
 
-import "github.com/hookenz/moneygo/web/deps"
+import "github.com/hookenz/app-template/web/deps"
 
 func Login() templ.Component {
 	return templruntime.GeneratedTemplate(func(templ_7745c5c3_Input templruntime.GeneratedComponentInput) (templ_7745c5c3_Err error) {
@@ -28,15 +28,23 @@ func Login() templ.Component {
 			templ_7745c5c3_Var1 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<!doctype html><html lang=\"en-US\"><head><meta charset=\"UTF-8\">")
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<!doctype html><html lang=\"en\"><head><!-- Required meta tags --><meta charset=\"utf-8\"><meta name=\"viewport\" content=\"width=device-width, initial-scale=1, shrink-to-fit=no\">")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = deps.Shoelace().Render(ctx, templ_7745c5c3_Buffer)
+		templ_7745c5c3_Err = deps.Bootstrap().Render(ctx, templ_7745c5c3_Buffer)
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<title>MoneyGO</title></head><div class=\"sign-on-panel\"><h2>Sign in</h2><div><form action=\"/api/auth\" method=\"POST\" enctype=\"multipart/x-www-form-urlencoded\" class=\"input-validation-pattern\"><div class=\"form-group\"><sl-input label=\"Username\" type=\"text\" id=\"username\" name=\"username\" required></sl-input></div><div class=\"form-group\"><sl-input label=\"Password\" type=\"password\" password-toggle id=\"password\" name=\"password\" required></sl-input></div><div class=\"form-group\"><sl-button variant=\"primary\" type=\"submit\">Login</sl-button></div></form></div></div></html>")
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<title>App Template</title></head><body class=\"main\"><div class=\"container d-flex flex-column min-vh-100 justify-content-center align-items-center\"><form action=\"/api/auth\" method=\"post\" enctype=\"multipart/x-www-form-urlencoded\" class=\"input-validation-pattern\"><div class=\"form-group\"><label for=\"username\">Username</label> <input type=\"text\" class=\"form-control\" id=\"username\" name=\"username\" placeholder=\"Enter username\"></div><div class=\"form-group\"><label for=\"password1\">Password</label> <input type=\"password\" class=\"form-control\" id=\"password1\" name=\"password\" placeholder=\"Password\"></div><div class=\"form-group form-check\"><input type=\"checkbox\" class=\"form-check-input\" id=\"rememberMe\" name=\"rememberMe\"> <label class=\"form-check-label\" for=\"rememberMe\">Remember me</label></div><button type=\"submit\" class=\"btn btn-primary\">Login</button></form></div>")
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		templ_7745c5c3_Err = deps.BootstrapJS().Render(ctx, templ_7745c5c3_Buffer)
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</body></html>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}

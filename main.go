@@ -7,8 +7,9 @@ import (
 	"os"
 	"syscall"
 
-	"github.com/hookenz/moneygo/api/db"
-	"github.com/hookenz/moneygo/api/server"
+	"github.com/hookenz/app-template/api/db"
+	"github.com/hookenz/app-template/api/server"
+
 	"golang.org/x/term"
 
 	_ "github.com/mattn/go-sqlite3"

@@ -3,7 +3,7 @@ package handler
 import (
 	"net/http"
 
-	u "github.com/hookenz/moneygo/api/services/user"
+	u "github.com/hookenz/app-template/api/services/user"
 
 	"github.com/labstack/echo/v4"
 	"github.com/rs/zerolog/log"
@@ -14,8 +14,9 @@ import (
 //
 
 type User struct {
-	Username string `form:"username"`
-	Password string `form:"password"`
+	Username   string `form:"username"`
+	Password   string `form:"password"`
+	RememberMe bool   `form:"rememberMe"`
 }
 
 func (h *Handler) Authenticate(c echo.Context) error {
@@ -27,10 +28,10 @@ func (h *Handler) Authenticate(c echo.Context) error {
 	}
 
 	// TODO: don't show the password in the logs
-	log.Debug().Msgf("user.name=%s, user.password=%s", user.Username, user.Password)
+	log.Debug().Msgf("user.name=%s, user.password=%s rememberMe=%t", user.Username, user.Password, user.RememberMe)
 	u, err := u.Authenticate(h.db, user.Username, user.Password)
 	if err != nil {
-		c.Redirect(302, "/login")
+		// c.Redirect(302, "/login")
 		return echo.NewHTTPError(http.StatusUnauthorized, "Please provide valid credentials")
 	}
 

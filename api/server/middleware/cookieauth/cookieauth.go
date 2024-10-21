@@ -1,7 +1,8 @@
 package cookieauth
 
 import (
-	"github.com/hookenz/moneygo/api/db"
+	"github.com/hookenz/app-template/api/db"
+
 	"github.com/labstack/echo/v4"
 	"github.com/rs/zerolog/log"
 )

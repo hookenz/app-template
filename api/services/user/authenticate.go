@@ -3,8 +3,8 @@ package user
 import (
 	"fmt"
 
-	"github.com/hookenz/moneygo/api/db"
-	"github.com/hookenz/moneygo/api/utils/hash"
+	"github.com/hookenz/app-template/api/db"
+	"github.com/hookenz/app-template/api/utils/hash"
 )
 
 type UserView struct {

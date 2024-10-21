@@ -3,8 +3,9 @@ package db
 import (
 	"fmt"
 
+	"github.com/hookenz/app-template/api/utils/hash"
+
 	"github.com/google/uuid"
-	"github.com/hookenz/moneygo/api/utils/hash"
 	"github.com/jmoiron/sqlx"
 	_ "github.com/mattn/go-sqlite3"
 	"github.com/michaeljs1990/sqlitestore"

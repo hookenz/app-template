@@ -1,30 +1,38 @@
 package pages 
 
-import "github.com/hookenz/moneygo/web/deps"
+import "github.com/hookenz/app-template/web/deps"
 
 templ Login() {
-	<!DOCTYPE html>
-	<html lang="en-US">
+	<!doctype html>
+	<html lang="en">
 		<head>
-			<meta charset="UTF-8"/>
-            @deps.Shoelace()
-			<title>MoneyGO</title>
+		   	<!-- Required meta tags -->
+			<meta charset="utf-8">
+    		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+			
+            @deps.Bootstrap()
+			<title>App Template</title>
 		</head>
-		<div class="sign-on-panel">
-			<h2>Sign in</h2>
-			<div>
-			<form action="/api/auth" method="POST" enctype="multipart/x-www-form-urlencoded" class="input-validation-pattern">
-				<div class="form-group">
-        			<sl-input label="Username" type="text" id="username" name="username" required />
-				</div>
-				<div class="form-group">
-         			<sl-input label="Password" type="password" password-toggle id="password" name="password" required />
-				</div>
-				<div class="form-group">
-                	<sl-button variant="primary" type="submit">Login</sl-button>
-				</div>
-			</form>
+		<body class="main">
+			<div class="container d-flex flex-column min-vh-100 justify-content-center align-items-center">
+				<form action="/api/auth" method="post" enctype="multipart/x-www-form-urlencoded" class="input-validation-pattern">
+					<div class="form-group">
+						<label for="username">Username</label>
+						<input type="text" class="form-control" id="username" name="username" placeholder="Enter username">
+					</div>
+					<div class="form-group">
+						<label for="password1">Password</label>
+						<input type="password" class="form-control" id="password1" name="password" placeholder="Password">
+					</div>
+					<div class="form-group form-check">
+						<input type="checkbox" class="form-check-input" id="rememberMe" name="rememberMe">
+						<label class="form-check-label" for="rememberMe">Remember me</label>
+					</div>
+					<button type="submit" class="btn btn-primary">Login</button>
+				</form>
 			</div>
-		</div>		
+
+			@deps.BootstrapJS()
+		</body>		
 	</html>
 }
