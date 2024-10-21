@@ -1,0 +1,30 @@
+package pages 
+
+import "github.com/hookenz/moneygo/web/deps"
+
+templ Login() {
+	<!DOCTYPE html>
+	<html lang="en-US">
+		<head>
+			<meta charset="UTF-8"/>
+            @deps.Shoelace()
+			<title>MoneyGO</title>
+		</head>
+		<div class="sign-on-panel">
+			<h2>Sign in</h2>
+			<div>
+			<form action="/api/auth" method="POST" enctype="multipart/x-www-form-urlencoded" class="input-validation-pattern">
+				<div class="form-group">
+        			<sl-input label="Username" type="text" id="username" name="username" required />
+				</div>
+				<div class="form-group">
+         			<sl-input label="Password" type="password" password-toggle id="password" name="password" required />
+				</div>
+				<div class="form-group">
+                	<sl-button variant="primary" type="submit">Login</sl-button>
+				</div>
+			</form>
+			</div>
+		</div>		
+	</html>
+}

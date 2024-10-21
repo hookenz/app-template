@@ -1,0 +1,37 @@
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  margin: 0;
+  background-color: var(--sl-panel-background-color);
+}
+.sign-on-panel {
+  background-color: whitesmoke;
+  padding: 2rem;
+  border-radius: 10px;
+  box-shadow: var(--sl-shadow-x-large);
+  width: 300px;
+}
+h2 {
+  text-align: center;
+  margin-bottom: 1.5rem;
+}
+.form-group {
+  margin-bottom: 1rem;
+}
+
+.topbar {
+  background-color: var(--sl-color-blue-500);
+  position: relative;
+  z-index: 2;
+}
+
+.menu {
+  background-color: var(--sl-color-blue-500);
+}
+
+/* Page content */
+.main {
+  margin-left: 200px; /* Same as the width of the sidenav */
+}
