@@ -1,11 +1,14 @@
 package pages
 
+import "github.com/hookenz/app-template/web/deps"
+
 templ Index() {
-	<!DOCTYPE html>
+	<!doctype html>
 	<html lang="en-US">
 		<head>
 			<meta charset="UTF-8"/>
 			<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+			@deps.Tailwind()
 			<title>App Template</title>
 		</head>
 		<body>

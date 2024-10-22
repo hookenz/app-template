@@ -89,6 +89,6 @@ func (s *Server) setupStaticHandler() {
 	s.e.StaticFS("/", fs)
 }
 
-func (s *Server) Start() {
-	s.e.Start(s.address)
+func (s *Server) Start() error {
+	return s.e.Start(s.address)
 }

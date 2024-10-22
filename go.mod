@@ -3,7 +3,7 @@ module github.com/hookenz/app-template
 go 1.23.0
 
 require (
-	github.com/a-h/templ v0.2.771
+	github.com/a-h/templ v0.2.778
 	github.com/alexedwards/argon2id v1.0.0
 	github.com/google/uuid v1.6.0
 	github.com/jmoiron/sqlx v1.4.0

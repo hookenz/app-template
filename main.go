@@ -43,8 +43,12 @@ func main() {
 		return
 	}
 
-	s := server.New(":9000", store, assets)
-	s.Start()
+	log.Info().Msgf("Starting server")
+	s := server.New(":8080", store, assets)
+	err = s.Start()
+	if err != nil {
+		log.Fatal().Msgf("failed to start server: %v", err)
+	}
 }
 
 func PromptAddUser(store db.Database, addUserName string) error {

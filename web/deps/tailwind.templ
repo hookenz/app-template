@@ -1,0 +1,9 @@
+package deps
+
+var tailwindHandle = templ.NewOnceHandle()
+
+templ Tailwind() {
+	@tailwindHandle.Once() {
+		<script src="https://cdn.tailwindcss.com"></script>
+   	}
+}

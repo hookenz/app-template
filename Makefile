@@ -15,7 +15,7 @@ server: ## Build the server
 	@echo "Building the Server API ..."	
 	templ generate
 	go generate ./...
-	GOOS=$(PLATFORM) GOARCH=$(ARCH) go build -trimpath --installsuffix cgo --ldflags "-s" -o dist/$@ .
+	GOOS=$(PLATFORM) GOARCH=$(ARCH) CGO_ENABLED=1 go build -trimpath --installsuffix cgo --ldflags "-s" -o dist/$@ .
 
 ##@ Dependencies
 
