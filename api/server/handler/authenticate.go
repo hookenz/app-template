@@ -49,11 +49,12 @@ func (h *Handler) Authenticate(c echo.Context) error {
 }
 
 func (h *Handler) Logout(c echo.Context) error {
-	var user User
-	err := c.Bind(&user)
-	if err != nil {
-		return c.String(http.StatusBadRequest, "bad request")
-	}
+	writeSessionCookie(c, "")
+	// var user User
+	// err := c.Bind(&user)
+	// if err != nil {
+	// 	return c.String(http.StatusBadRequest, "bad request")
+	// }
 
 	return c.Redirect(302, "/login")
 }

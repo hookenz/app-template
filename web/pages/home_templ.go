@@ -38,11 +38,11 @@ func Home() templ.Component {
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = deps.HTMX().Render(ctx, templ_7745c5c3_Buffer)
+		templ_7745c5c3_Err = deps.Tailwind().Render(ctx, templ_7745c5c3_Buffer)
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<title>App Template</title></head><body></body></html>")
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<title>App Template</title></head><body class=\"h-full\"><div class=\"h-screen flex items-center justify-center\"><div class=\"flex flex-col space-y-4 text-center text-base\"><p class=\"text-lg font-bold\">Congratulations, you've successully logged in.</p><p>This page is only available to those who have successfully logged in.</p><a href=\"/api/logout\">Click here to logout</a></div></div></body></html>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}

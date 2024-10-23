@@ -52,7 +52,7 @@ func (s *Server) setupHandlers() {
 
 	api := handler.NewHandler(s.db)
 	s.e.POST("/api/auth", api.Authenticate)
-	s.e.POST("/api/logout", api.Logout)
+	s.e.GET("/api/logout", api.Logout)
 
 	// authenticated routes follow
 	authenticated := s.e.Group("", cookieauth.Middleware(s.db))

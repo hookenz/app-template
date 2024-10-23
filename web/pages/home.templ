@@ -6,15 +6,22 @@ import (
 )
 
 templ Home() {
-	<!DOCTYPE html>
+	<!doctype html>
 	<html lang="en">
 		<head>
 			<meta charset="UTF-8"/>
 			<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-			@deps.HTMX()
+			@deps.Tailwind()
 			<title>App Template</title>
 		</head>
-        <body>
+		<body class="h-full">
+			<div class="h-screen flex items-center justify-center">
+				<div class="flex flex-col space-y-4 text-center text-base">
+					<p class="text-lg font-bold">Congratulations, you've successully logged in.</p>
+					<p>This page is only available to those who have successfully logged in.</p>
+					<a href="/api/logout">Click here to logout</a>
+				</div>
+			</div>
 		</body>
 	</html>
 }
