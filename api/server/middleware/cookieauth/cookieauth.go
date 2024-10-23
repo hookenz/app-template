@@ -7,6 +7,14 @@ import (
 	"github.com/rs/zerolog/log"
 )
 
+// type UserContext struct {
+// 	echo.Context
+// }
+
+// func (c *UserContext) User() (db.UserRecord, error) {
+
+// }
+
 func Middleware(db db.Database) echo.MiddlewareFunc {
 	return func(next echo.HandlerFunc) echo.HandlerFunc {
 		return func(c echo.Context) error {
