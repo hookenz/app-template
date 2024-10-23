@@ -17,13 +17,15 @@ func Middleware(db db.Database) echo.MiddlewareFunc {
 			}
 
 			// how do I read the DB from here?
-			valid, err := db.GetSession(id)
+			session, err := db.GetSession(id)
 			if err != nil {
 				log.Debug().Msgf("db.GetSession failed: err: %v", err)
 				return c.Redirect(302, "/login")
 			}
 
-			if !valid {
+			log.Debug().Msgf("Session: %+v", session)
+
+			if !session.Active {
 				log.Debug().Msg("session id is not valid")
 				return c.Redirect(302, "/login")
 			}

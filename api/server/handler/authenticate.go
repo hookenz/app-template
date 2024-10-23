@@ -38,7 +38,7 @@ func (h *Handler) Authenticate(c echo.Context) error {
 	log.Debug().Msgf("User authenticated %v", u.Name)
 
 	// Generate an id
-	id, err := h.db.CreateSession()
+	id, err := h.db.CreateSession(u.UserID, c.RealIP())
 	if err != nil {
 		return err
 	}

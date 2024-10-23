@@ -10,11 +10,12 @@ import (
 type UserView struct {
 	Name      string
 	SessionID string
+	UserID    string
 }
 
-func Authenticate(db db.Database, username, password string) (UserView, error) {
+func Authenticate(db db.Database, email, password string) (UserView, error) {
 	user := UserView{}
-	record, err := db.SelectUser(username)
+	record, err := db.SelectUser(email)
 	if err != nil {
 		return user, err
 	}
@@ -28,5 +29,7 @@ func Authenticate(db db.Database, username, password string) (UserView, error) {
 		return user, fmt.Errorf("authentication failure")
 	}
 
+	user.Name = record.Email
+	user.UserID = record.ID
 	return user, nil
 }

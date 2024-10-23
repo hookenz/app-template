@@ -8,30 +8,26 @@ import (
 	"github.com/google/uuid"
 	"github.com/jmoiron/sqlx"
 	_ "github.com/mattn/go-sqlite3"
-	"github.com/michaeljs1990/sqlitestore"
 )
-
-const maxAge = 3600
 
 const createUserSQL = `CREATE TABLE IF NOT EXISTS user (
     id TEXT PRIMARY KEY NOT NULL,
-    name TEXT UNIQUE NOT NULL,
+    email TEXT UNIQUE NOT NULL,
 	password TEXT NOT NULL
 );`
 
 const createSessionSQL = `CREATE TABLE IF NOT EXISTS session (
-	id TEXT UNIQUE PRIMARY KEY NOT NULL
+	id TEXT UNIQUE PRIMARY KEY NOT NULL,
+	user_id TEXT NOT NULL,
+	ip_address TEXT,
+	active INTEGER DEFAULT 1,
+	last_activity DATETIME DEFAULT CURRENT_TIMESTAMP,
+	FOREIGN KEY (user_id) REFERENCES user(id) 
 )`
 
-const selectUserSQL = `SELECT id, name, password from USER WHERE name = ?`
-const insertUserSQL = `INSERT INTO USER (id, name, password) VALUES (?, ?, ?)`
-const insertSessionSQL = `INSERT INTO SESSION (id) VALUES (?)`
-const selectSessionSQL = `SELECT id from SESSION where id = ?`
-
 type SqliteStore struct {
-	filename     string
-	db           *sqlx.DB
-	sessionStore *sqlitestore.SqliteStore
+	filename string
+	db       *sqlx.DB
 }
 
 func NewSqliteStore(filename string) Database {
@@ -59,14 +55,14 @@ func (s *SqliteStore) Open() error {
 	return nil
 }
 
-func (s *SqliteStore) SelectUser(name string) (UserRecord, error) {
-	row := s.db.QueryRow(selectUserSQL, name)
+func (s *SqliteStore) SelectUser(email string) (UserRecord, error) {
+	row := s.db.QueryRow(`SELECT id, email, password from USER WHERE email = ?`, email)
 	user := UserRecord{}
-	err := row.Scan(&user.ID, &user.Name, &user.Password)
+	err := row.Scan(&user.ID, &user.Email, &user.Password)
 	return user, err
 }
 
-func (s *SqliteStore) InsertUser(name, password string) error {
+func (s *SqliteStore) InsertUser(email, password string) error {
 	id, err := uuid.NewV7()
 	if err != nil {
 		return fmt.Errorf("error generating user id: %w", err)
@@ -77,26 +73,27 @@ func (s *SqliteStore) InsertUser(name, password string) error {
 		return fmt.Errorf("error creating password hash: %w", err)
 	}
 
-	_, err = s.db.Exec(insertUserSQL, id, name, hash)
+	_, err = s.db.Exec(`INSERT INTO user (id, email, password) 
+						VALUES (?, ?, ?)`, id, email, hash)
 	return err
 }
 
-func (s *SqliteStore) CreateSession() (string, error) {
+func (s *SqliteStore) CreateSession(userId, ipAddress string) (string, error) {
 	id, err := uuid.NewV7()
 	if err != nil {
 		return "", fmt.Errorf("error generating session id: %w", err)
 	}
 
-	_, err = s.db.Exec(insertSessionSQL, id)
-	return id.String(), nil
+	_, err = s.db.Exec(`INSERT INTO session (id, user_id, ip_address) 
+						VALUES (?, ?, ?)`, id, userId, ipAddress)
+	return id.String(), err
 }
 
-func (s *SqliteStore) GetSession(id string) (bool, error) {
-	row := s.db.QueryRow(selectSessionSQL, id)
-	var sessionid string
-	err := row.Scan(&sessionid)
-	found := err == nil
-	return found, err
+func (s *SqliteStore) GetSession(id string) (SessionRecord, error) {
+	var session SessionRecord
+	err := s.db.Get(&session, `SELECT id, user_id, ip_address, active, last_activity 
+								FROM session WHERE id = ?`, id)
+	return session, err
 }
 
 func (s *SqliteStore) createTables() error {
