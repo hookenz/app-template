@@ -78,6 +78,11 @@ func (s *SqliteStore) InsertUser(email, password string) error {
 	return err
 }
 
+func (s *SqliteStore) ChangeUserPassword(email, password string) error {
+	_, err := s.db.Exec(`UPDATE user SET password = ? WHERE email = ?`, password, email)
+	return err
+}
+
 func (s *SqliteStore) CreateSession(userId, ipAddress string) (string, error) {
 	id, err := uuid.NewV7()
 	if err != nil {

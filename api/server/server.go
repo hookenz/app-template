@@ -55,6 +55,7 @@ func (s *Server) setupHandlers() {
 	s.e.GET("/api/logout", api.Logout)
 
 	// authenticated routes follow
+	s.e.Use(middleware.RequestID())
 	authenticated := s.e.Group("", cookieauth.Middleware(s.db))
 	authenticated.GET("/home", HomeHandler)
 }
