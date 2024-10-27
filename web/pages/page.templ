@@ -1,6 +1,9 @@
 package pages
 
-import "github.com/hookenz/app-template/web/deps"
+import (
+    "github.com/hookenz/app-template/web/components"
+    "github.com/hookenz/app-template/web/deps"
+)
 
 templ Page() {
     <!DOCTYPE html>
@@ -11,9 +14,7 @@ templ Page() {
             @deps.HTMX()
         </head>
         <body>
-            <div class="topbar"></div>
-            <div class="menu"></div>
-            <div class="mainpanel"></div>
+            @components.NavMenu()
         </body>
     </html>
 }

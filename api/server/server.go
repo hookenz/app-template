@@ -2,6 +2,7 @@ package server
 
 import (
 	"embed"
+	"fmt"
 	"net/http"
 
 	"github.com/a-h/templ"
@@ -47,8 +48,11 @@ func (s *Server) setupMiddleware() {
 }
 
 func (s *Server) setupHandlers() {
-	s.e.GET("/", IndexHandler)
-	s.e.GET("/login", LoginHandler)
+	s.e.GET("/", NewHandler(pages.Index))
+	s.e.GET("/login", NewHandler(pages.Login))
+
+	// TODO: get custom error handler working
+	// s.e.HTTPErrorHandler = customHTTPErrorHandler
 
 	api := handler.NewHandler(s.db)
 	s.e.POST("/api/auth", api.Authenticate)
@@ -57,19 +61,15 @@ func (s *Server) setupHandlers() {
 	// authenticated routes follow
 	s.e.Use(middleware.RequestID())
 	authenticated := s.e.Group("", cookieauth.Middleware(s.db))
-	authenticated.GET("/home", HomeHandler)
+	authenticated.GET("/home", NewHandler(pages.Home))
+	authenticated.GET("/users", NewHandler(pages.Users))
+	authenticated.GET("/posts", NewHandler(pages.Posts))
 }
 
-func IndexHandler(c echo.Context) error {
-	return Render(c, http.StatusOK, pages.Index())
-}
-
-func LoginHandler(c echo.Context) error {
-	return Render(c, http.StatusOK, pages.Login())
-}
-
-func HomeHandler(c echo.Context) error {
-	return Render(c, http.StatusOK, pages.Home())
+func NewHandler(pageFunc func() templ.Component) echo.HandlerFunc {
+	return func(c echo.Context) error {
+		return Render(c, http.StatusOK, pageFunc())
+	}
 }
 
 // This custom Render replaces Echo's echo.Context.Render() with templ's templ.Component.Render().
@@ -92,4 +92,16 @@ func (s *Server) setupStaticHandler() {
 
 func (s *Server) Start() error {
 	return s.e.Start(s.address)
+}
+
+func customHTTPErrorHandler(err error, c echo.Context) {
+	code := http.StatusInternalServerError
+	if he, ok := err.(*echo.HTTPError); ok {
+		code = he.Code
+	}
+	c.Logger().Error(err)
+	errorPage := fmt.Sprintf("%d.html", code)
+	if err := c.File(errorPage); err != nil {
+		c.Logger().Error(err)
+	}
 }
