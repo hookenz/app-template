@@ -24,5 +24,9 @@ go.work.sum
 # env file
 .env
 
-dist
+go.work
+
+dist/
 database.db
+
+**/*_templ.go
