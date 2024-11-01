@@ -1,0 +1,9 @@
+package components
+
+templ App(siteTitle string, loggedIn bool) {
+	<!doctype html>
+	<html lang="en">
+        @Head(siteTitle)
+        @Body(loggedIn)
+    </html>
+}

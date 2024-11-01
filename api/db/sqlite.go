@@ -2,6 +2,7 @@ package db
 
 import (
 	"fmt"
+	"time"
 
 	"github.com/hookenz/app-template/api/utils/hash"
 
@@ -58,7 +59,7 @@ func (s *SqliteStore) Open() error {
 func (s *SqliteStore) SelectUser(email string) (UserRecord, error) {
 	row := s.db.QueryRow(`SELECT id, email, password from USER WHERE email = ?`, email)
 	user := UserRecord{}
-	err := row.Scan(&user.ID, &user.Email, &user.Password)
+	err := row.Scan(&user.Id, &user.Email, &user.Password)
 	return user, err
 }
 
@@ -83,22 +84,26 @@ func (s *SqliteStore) ChangeUserPassword(email, password string) error {
 	return err
 }
 
-func (s *SqliteStore) CreateSession(userId, ipAddress string) (string, error) {
+func (s *SqliteStore) CreateSession(userId, ipAddress string) (*SessionRecord, error) {
 	id, err := uuid.NewV7()
 	if err != nil {
-		return "", fmt.Errorf("error generating session id: %w", err)
+		return nil, fmt.Errorf("error generating session id: %w", err)
 	}
 
 	_, err = s.db.Exec(`INSERT INTO session (id, user_id, ip_address) 
 						VALUES (?, ?, ?)`, id, userId, ipAddress)
-	return id.String(), err
+	if err != nil {
+		return nil, err
+	}
+
+	return &SessionRecord{Id: id.String(), UserId: userId, Active: true, LastActivity: time.Now()}, nil
 }
 
-func (s *SqliteStore) GetSession(id string) (SessionRecord, error) {
+func (s *SqliteStore) GetSession(id string) (*SessionRecord, error) {
 	var session SessionRecord
 	err := s.db.Get(&session, `SELECT id, user_id, ip_address, active, last_activity 
 								FROM session WHERE id = ?`, id)
-	return session, err
+	return &session, err
 }
 
 func (s *SqliteStore) createTables() error {

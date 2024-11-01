@@ -1,7 +1,6 @@
 package pages
 
 import (
-    "github.com/hookenz/app-template/web/components"
     "github.com/hookenz/app-template/web/deps"
 )
 
@@ -13,8 +12,8 @@ templ Page() {
             <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
             @deps.HTMX()
         </head>
-        <body>
-            @components.NavMenu()
+        <body body class="h-full">
+        
         </body>
     </html>
 }

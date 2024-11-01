@@ -28,23 +28,23 @@ func (h *Handler) Authenticate(c echo.Context) error {
 	}
 
 	// TODO: don't show the password in the logs
-	log.Debug().Msgf("user.name=%s, user.password=%s rememberMe=%t", user.Email, user.Password, user.RememberMe)
+	log.Debug().Msgf("user.email=%s, user.password=%s rememberMe=%t", user.Email, user.Password, user.RememberMe)
 	u, err := u.Authenticate(h.db, user.Email, user.Password)
 	if err != nil {
 		// c.Redirect(302, "/login")
 		return echo.NewHTTPError(http.StatusUnauthorized, "Please provide valid credentials")
 	}
 
-	log.Debug().Msgf("User authenticated %v", u.Name)
+	log.Debug().Msgf("User authenticated %v", u.Email)
 
 	// Generate an id
-	id, err := h.db.CreateSession(u.UserID, c.RealIP())
+	session, err := h.db.CreateSession(u.Id, c.RealIP())
 	if err != nil {
 		return err
 	}
 
 	// Create a session cookie
-	writeSessionCookie(c, id)
+	writeSessionCookie(c, session.Id)
 	return c.Redirect(302, "/home")
 }
 

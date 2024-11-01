@@ -8,28 +8,25 @@ import (
 )
 
 type UserView struct {
-	Name      string
-	SessionID string
-	UserID    string
+	Id        string
+	Email     string
+	SessionId string
 }
 
-func Authenticate(db db.Database, email, password string) (UserView, error) {
-	user := UserView{}
+func Authenticate(db db.Database, email, password string) (*UserView, error) {
 	record, err := db.SelectUser(email)
 	if err != nil {
-		return user, err
+		return nil, err
 	}
 
 	match, err := hash.Compare(password, record.Password)
 	if err != nil {
-		return user, fmt.Errorf("authentication failure")
+		return nil, fmt.Errorf("authentication failure")
 	}
 
 	if !match {
-		return user, fmt.Errorf("authentication failure")
+		return nil, fmt.Errorf("authentication failure")
 	}
 
-	user.Name = record.Email
-	user.UserID = record.ID
-	return user, nil
+	return &UserView{Id: record.Id, Email: record.Email}, nil
 }

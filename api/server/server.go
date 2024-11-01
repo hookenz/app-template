@@ -48,8 +48,8 @@ func (s *Server) setupMiddleware() {
 }
 
 func (s *Server) setupHandlers() {
-	s.e.GET("/", NewHandler(pages.Index))
-	s.e.GET("/login", NewHandler(pages.Login))
+	s.e.GET("/", NewHandler(pages.Index()))
+	s.e.GET("/login", NewHandler(pages.Login()))
 
 	// TODO: get custom error handler working
 	// s.e.HTTPErrorHandler = customHTTPErrorHandler
@@ -61,14 +61,16 @@ func (s *Server) setupHandlers() {
 	// authenticated routes follow
 	s.e.Use(middleware.RequestID())
 	authenticated := s.e.Group("", cookieauth.Middleware(s.db))
-	authenticated.GET("/home", NewHandler(pages.Home))
-	authenticated.GET("/users", NewHandler(pages.Users))
-	authenticated.GET("/posts", NewHandler(pages.Posts))
+	authenticated.GET("/home", NewHandler(pages.Page()))
+	authenticated.GET("/users", NewHandler(pages.Users()))
+	authenticated.GET("/posts", NewHandler(pages.Posts()))
 }
 
-func NewHandler(pageFunc func() templ.Component) echo.HandlerFunc {
+// NewHandler that accepts a templ.Component directly
+func NewHandler(component templ.Component) echo.HandlerFunc {
 	return func(c echo.Context) error {
-		return Render(c, http.StatusOK, pageFunc())
+		// Render the provided component
+		return Render(c, http.StatusOK, component)
 	}
 }
 

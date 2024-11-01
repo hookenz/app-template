@@ -24,7 +24,6 @@ func Middleware(db db.Database) echo.MiddlewareFunc {
 				return c.Redirect(302, "/login")
 			}
 
-			// how do I read the DB from here?
 			session, err := db.GetSession(id)
 			if err != nil {
 				log.Debug().Msgf("db.GetSession failed: err: %v", err)
